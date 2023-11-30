@@ -36,22 +36,41 @@ with open(filename, "r") as csvfile:
     for r in reader:
         location = r.get('location')
         field = location.split('/')[-1]
+        splitTag = mapping2[field].split(':')
+        tag = f"{{{NSMAP.get(splitTag[0])}}}{splitTag[1]}"
         
-        element = tree.xpath(r.get('location'), namespaces = NSMAP)[0]
-        IDs = element.xpath(mapping2[field], namespaces = NSMAP)
+        IDelements = tree.xpath(r.get('location') + "/" + mapping2[field], namespaces = NSMAP)
+
+
+        modifiedElements = dict()
 
         for k,v in r.items():
             m = re.match('^(\d+) (\S+)$', k)
+            v = v.strip()
             if m:
                 if v != "":
-                    index = int(m.group(1))
-                    if m.group(2) == "text":
-                        IDs[index].text = v
-                    else:
-                        attribKey = m.group(2)
-                        IDs[index].attrib[attribKey] = v
 
+                    index = int(m.group(1))
+                    if not index in modifiedElements:
+                        modifiedElements[index] = etree.Element(tag)
+                    
+                    if m.group(2) == "text":
+                        modifiedElements[index].text = v
+                    else:
+                        modifiedElements[index].attrib[m.group(2)] = v
+
+        for n, elem in enumerate(IDelements):
+            if modifiedElements.get(n) is not None:
+                IDelements[n].getparent().replace(IDelements[n],modifiedElements.pop(n))
+            else:
+                print(n)
+
+        for elem in modifiedElements.values():
+            xpath = r.get('location') + "/" + mapping2[field] + "[last()]"
+            tree.xpath(xpath, namespaces = NSMAP)[0].getparent().insert(n + 1, elem)
+            n += 1
 
 outputfilename = xml_filename.stem + args.infix + xml_filename.suffix
 
 tree.write(outputfilename, encoding = "utf-8", xml_declaration = True)
+print(outputfilename, " written.")

@@ -5,7 +5,7 @@
 Clone the git repository and change into the `LIDOrefine` directory:
 
 ```bash
-git clone ...
+git clone git@github.com:alexander-winkler/LIDOrefine.git
 cd LIDOrefine
 ```
 Create a virutal environment (optional) and activate it:
