@@ -1,0 +1,12 @@
+{
+    "a" : {
+        "parent" : ".//lido:actor",
+        "string" : "lido:nameActorSet/lido:appellationValue/text()",
+        "id" : "lido:actorID"
+    },
+    "p" : {
+        "parent" : ".//lido:actor",
+        "string" : "lido:nameActorSet/lido:appellationValue/text()",
+        "id" : "lido:actorID"  
+    }
+}
