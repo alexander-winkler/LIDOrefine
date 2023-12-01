@@ -70,3 +70,39 @@ Write the modified data back into the LIDO XML file.
 - `i`/`--infile`: The CSV file that has been modified.
 - `x`/`--xml`: The original XML file the modified data is to be written into.
 - `I`/`--infix`: String added to the output filename in order to avoid that the original file be overwritten. Default value: `_refined`. The above example thus produces an file with the filename `inputLIDO_refined.xml`
+
+## Workflow
+
+The original XML file (`LIDO-Example_FMobj00154983-LaPrimavera.xml`) resides in the directory `LIDOrefine` where the scripts are also located.
+
+1. Generate a CSV extracting the actor fields:
+
+```bash
+python LR2csv.py -i LIDO-Example_FMobj00154983-LaPrimavera.xml
+-a
+```
+
+The generated csv file is named `LIDO-Example_FMobj00154983-LaPrimavera.csv`.
+
+2. Open OpenRefine, import the CSV and do the reconciling
+
+![](img/OR_import.png)
+
+3. Write the reconciliation results into the appropriate column
+
+![](img/OR_insertReconMatch.png)
+
+4. Export the results into a CSV file (the default name suggested by OpenRefine is `LIDO-Example-FMobj00154983-LaPrimavera-csv.csv`)
+
+![](img/OR_export.png)
+
+5. Insert the reconciled values from the CSV into the original LIDO XML. Note that the name of the original XML has to be specified as the CSV has a slightly different name now.
+
+```bash
+python LR2xml.py -i LIDO-Example-FMobj00154983-LaPrimavera-csv.csv -x LIDO-Example_FMobj00154983-LaPrimavera.xml
+```
+
+The result is `LIDO-Example_FMobj00154983-LaPrimavera_refined.xml`, a enriched version of the original LIDO.
+
+
+

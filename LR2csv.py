@@ -33,7 +33,7 @@ NSMAP = tree.getroot().nsmap
 
 outputCollector = []
 
-def convert(subdict):
+def convert(subdict, additionalElements):
     parentList = tree.findall(subdict['parent'], NSMAP)
     outputList = []
     for _ in parentList:
@@ -52,27 +52,25 @@ def convert(subdict):
             i = n
         keys = set(keys)
         i += 1
-        for x in range(i, i + args.a + 1):
+        for x in range(i, i + additionalElements + 1):
             for k in keys:
                 output[f"{x} {k}"] = ""
         outputList.append(output)
     return outputList
 
 if args.a:
-    outputCollector.extend(convert(mapping['a']))
+    outputCollector.extend(convert(mapping['a'], args.a))
 
 if args.p:
-    outputCollector.extend(convert(mapping['p']))
+    outputCollector.extend(convert(mapping['p'], args.p))
 
 
 fieldnames = []
 for row in outputCollector:
     fieldnames.extend(row.keys())
-    print("extend:",fieldnames)
     fieldnames = natsorted(set(fieldnames))
-    print("sorted", fieldnames)
     fieldnames = fieldnames[-2:] + fieldnames[:-2]
-    print("reordered",fieldnames)
+
 if args.outfile: 
     outputFilename = Path(args.outfile)
 else:
