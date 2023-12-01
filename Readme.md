@@ -102,7 +102,7 @@ The generated csv file is named `LIDO-Example_FMobj00154983-LaPrimavera.csv`.
 python LR2xml.py -i LIDO-Example-FMobj00154983-LaPrimavera-csv.csv -x LIDO-Example_FMobj00154983-LaPrimavera.xml
 ```
 
-The result is `LIDO-Example_FMobj00154983-LaPrimavera_refined.xml`, a enriched version of the original LIDO.
+The result is `LIDO-Example_FMobj00154983-LaPrimavera_refined.xml`, an enriched version of the original LIDO.
 
 
 
