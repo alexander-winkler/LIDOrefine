@@ -9,8 +9,8 @@ import json
 # PARSER
 parser = argparse.ArgumentParser(
                     prog='LR2csv - Convert refined CSV back into a LIDO XML',
-                    description='What the program does',
-                    epilog='Text at the bottom of help')
+                    description='Takes a CSV (generated with LR2csv.py and enriched using, e.g. OpenRefine), the original LIDO XML and writes the modifications into a new LIDO XML file'
+                    )
 parser.add_argument('-i', '--infile')
 parser.add_argument('-x', '--xml')
 parser.add_argument('-I', '--infix', nargs = "?", default = "_refined")

@@ -8,5 +8,15 @@
         "parent" : ".//lido:actor",
         "string" : "lido:nameActorSet/lido:appellationValue/text()",
         "id" : "lido:actorID"  
+    },
+    "o" : {
+            "parent" : ".//lido:objectWorktype",
+            "string" : "lido:term/text()",
+            "id" : "lido:conceptID"  
+        },
+    "s" : {
+        "parent" : ".//lido:subjectConcept",
+        "string" : "lido:term/text()",
+        "id" : "lido:conceptID"  
     }
 }

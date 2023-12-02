@@ -47,15 +47,13 @@ Converts the actor fields of the file `inputLIDO.xml` into csv and add 3 more ac
 - `-h`/`--help`: print help text
 - `-a <N>`: enrich actors, an optional number after `-a` adds `N` fields to the csv.
 - `-p <N>`: enrich places. Again `<N>` adds `N` fields.
+- `s <N>`: enricht subjects.
+- `o <N>`: enrich objectWorktype.
 - `-i`/`--infile`: specify input file (mandatory)
-- `-o`/`--outfile`: specify output filename, if not specified, the input filename is derived from input filename
+- `-O`/`--outfile`: specify output filename, if not specified, the input filename is derived from input filename
 - `-d`/`--targetdir`: specify folder where output is to be written. Folder is created if it doesn't exist. If this option is not provided, output is written in the current directory
 
 
-### TODO
-
-- add other fields
-- allow SKOS
 
 ## LR2xml
 
@@ -106,3 +104,16 @@ The result is `LIDO-Example_FMobj00154983-LaPrimavera_refined.xml`, an enriched 
 
 
 
+
+### TODO
+
+- add Exception Handling
+- add other fields? 
+- allow SKOS for full LIDO 1.1 support
+
+
+## Possible Developments
+
+- Bundle scripts into a standalone application without dependencies
+- Offer the pipeline as a simple web application (upload XML, get CSV, modify CSV upload XML + CSV, get back the updated XML)
+- Offer basic reconciliation for most commonly used fields and vocabularies in a web application (makes intermediary use of OpenRefine unnecessary)

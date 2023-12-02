@@ -17,6 +17,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('-a', action = "store", nargs = '?', default = 0, const = True, type = int, help = 'enrich actor fields')
 parser.add_argument('-p', action = "store", nargs = '?', default = 0, const = True, type = int, help = 'enrich place fields')
+parser.add_argument('-s', action = "store", nargs = '?', default = 0, const = True, type = int, help = 'enrich subject fields')
 parser.add_argument('-i', '--infile', required = True)
 parser.add_argument('-o', '--outfile', required = False)
 parser.add_argument('-d', '--targetdir', help = "specify the target dir" )
@@ -63,6 +64,12 @@ if args.a:
 
 if args.p:
     outputCollector.extend(convert(mapping['p'], args.p))
+
+if args.s:
+    outputCollector.extend(convert(mapping['s'], args.s))
+
+if args.o:
+    outputCollector.extend(convert(mapping['o'], args.o))
 
 
 fieldnames = []
