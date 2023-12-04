@@ -68,8 +68,8 @@ if args.p:
 if args.s:
     outputCollector.extend(convert(mapping['s'], args.s))
 
-if args.o:
-    outputCollector.extend(convert(mapping['o'], args.o))
+if args.outfile:
+    outputCollector.extend(convert(mapping['o'], args.outfile))
 
 
 fieldnames = []
