@@ -32,7 +32,9 @@ tree = etree.parse(xml_filename)
 NSMAP = tree.getroot().nsmap
 
 with open(filename, "r") as csvfile:
-    reader = csv.DictReader(csvfile)
+    dialect = csv.Sniffer().sniff(csvfile.readline(), [',',';'])
+    csvfile.seek(0)
+    reader = csv.DictReader(csvfile, delimiter = dialect.delimiter)
     for r in reader:
         location = r.get('location')
         field = location.split('/')[-1]
