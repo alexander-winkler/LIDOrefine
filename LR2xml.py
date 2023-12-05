@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 import csv
 import json
+import sys
 
 
 # PARSER
@@ -31,8 +32,14 @@ with open('mapping.json', 'r') as f:
   mapping = json.load(f)
   mapping2 = { v['parent'].split('/')[-1] : v['id'] for v in mapping.values()}
 
-tree = etree.parse(xml_filename)
-NSMAP = tree.getroot().nsmap
+try:
+    tree = etree.parse(xml_filename)
+    NSMAP = tree.getroot().nsmap
+except OSError as e:
+    print(f"The original input XML could not be found. Provide the correct file name using the -x/--xml option.")
+    print(e)
+    sys.exit(1)
+
 
 with open(filename, "r") as csvfile:
     dialect = csv.Sniffer().sniff(csvfile.readline(), [',',';'])
@@ -75,7 +82,7 @@ with open(filename, "r") as csvfile:
             tree.xpath(xpath, namespaces = NSMAP)[0].getparent().insert(n + 1, elem)
             n += 1
 
-outputfilename = xml_filename.stem + args.infix + xml_filename.suffix
+    outputfilename = xml_filename.stem + args.infix + xml_filename.suffix
 
-tree.write(outputfilename, encoding = "utf-8", xml_declaration = True)
-print(outputfilename, " written.")
+    tree.write(outputfilename, encoding = "utf-8", xml_declaration = True)
+    print(outputfilename, " written.")
