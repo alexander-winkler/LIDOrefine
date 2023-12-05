@@ -22,6 +22,9 @@ if args.xml:
     xml_filename = Path(args.xml)
 else:
     xml_filename = filename.with_suffix('.xml')
+    if not xml_filename.is_file():
+        xml_filename = Path(str(xml_filename).replace("-csv",""))
+        print(f"No file named {xml_filename} found, try {xml_filename} instead.")
 
 
 with open('mapping.json', 'r') as f:
