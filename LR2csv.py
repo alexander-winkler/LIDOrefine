@@ -28,34 +28,44 @@ parser.add_argument('-d', '--targetdir', help = "specify the target dir" )
 args = parser.parse_args()
 filename = Path(args.infile)
 
-
 tree = etree.parse(filename)
 NSMAP = tree.getroot().nsmap
 
 outputCollector = []
 
 def convert(subdict, additionalElements):
-    parentList = tree.findall(subdict['parent'], NSMAP)
+    parentList = tree.findall(subdict['parent'], NSMAP) # actor/place/objectWorktype/subjectConcept
     outputList = []
     for _ in parentList:
-        location = tree.getpath(_)
+        location = tree.getpath(_) # xPath zum Feld
         string = _.xpath(subdict['string'], namespaces = NSMAP)[0]
-        IDs = _.xpath(subdict['id'], namespaces = NSMAP)
-        IDs = [ dict(text = _.text) | dict(_.attrib) for _ in IDs]
+        keys = ["{http://www.lido-schema.org}type", "{http://www.lido-schema.org}source", "text"]
+        
+        _IDs = _.xpath(subdict['id'], namespaces = NSMAP)
+        IDs = []
+        for _ in _IDs:
+            attributes = dict.fromkeys(keys, "")
+            attributes['text'] = _.text
+            attributes.update(_.attrib)
+            IDs.append(attributes)
+
+        #IDs = [ dict(text = _.text) | dict(_.attrib) for _ in IDs]
         output = dict(location = location, string = string)
-        keys = []
+        
+        # iterate over ID-elements
         i = 0
-        for n, _ in enumerate(IDs, start = i):
+        for n, _ in enumerate(IDs):
             for k,v in _.items():
                 keys.append(k)
                 key = f"{n} {k}"
                 output[key] = v
-            i = n
+                i += n
         keys = set(keys)
-        i += 1
-        for x in range(i, i + additionalElements + 1):
+        # add n additional (empty) Columns
+        for x in range(i +1 , i + additionalElements + 1):
             for k in keys:
-                output[f"{x} {k}"] = ""
+                if not f"{x} {k}" in output:
+                    output[f"{x} {k}"] = ""
         outputList.append(output)
     return outputList
 
@@ -72,11 +82,14 @@ if args.outfile:
     outputCollector.extend(convert(mapping['o'], args.outfile))
 
 
+fixColumns = ["location", "string"] # first two columns
+
 fieldnames = []
 for row in outputCollector:
     fieldnames.extend(row.keys())
+    fieldnames = [_ for _ in fieldnames if not _ in fixColumns]
     fieldnames = natsorted(set(fieldnames))
-    fieldnames = fieldnames[-2:] + fieldnames[:-2]
+    fieldnames = fixColumns + fieldnames
 
 if args.outfile: 
     outputFilename = Path(args.outfile)
