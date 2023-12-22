@@ -5,6 +5,7 @@ import re
 from natsort import natsorted
 from pathlib import Path
 import json
+import sys
 
 with open('mapping.json', 'r') as f:
   mapping = json.load(f)
@@ -28,8 +29,12 @@ parser.add_argument('-d', '--targetdir', help = "specify the target dir" )
 args = parser.parse_args()
 filename = Path(args.infile)
 
-tree = etree.parse(filename)
-NSMAP = tree.getroot().nsmap
+try:
+    tree = etree.parse(filename)
+    NSMAP = tree.getroot().nsmap
+except Exception as e:
+    print(f"There was a problem with parsing the XML input file {filename}. Make sure the file is a proper XML file.")
+    sys.exit(1)
 
 outputCollector = []
 
