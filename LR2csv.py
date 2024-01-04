@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-a', action = "store", nargs = '?', default = 0, const = True, type = int, help = 'enrich actor fields')
 parser.add_argument('-p', action = "store", nargs = '?', default = 0, const = True, type = int, help = 'enrich place fields')
 parser.add_argument('-s', action = "store", nargs = '?', default = 0, const = True, type = int, help = 'enrich subject fields')
+parser.add_argument('-O', action = "store", nargs = '?', default = 0, const = True, type = int, help = 'enrich objectWorkType fields')
 parser.add_argument('-i', '--infile', required = True)
 parser.add_argument('-o', '--outfile', required = False)
 parser.add_argument('-d', '--targetdir', help = "specify the target dir" )
@@ -82,6 +83,9 @@ if args.p:
 
 if args.s:
     outputCollector.extend(convert(mapping['s'], args.s))
+
+if args.O:
+    outputCollector.extend(convert(mapping['O'], args.O))
 
 if args.outfile:
     outputCollector.extend(convert(mapping['o'], args.outfile))

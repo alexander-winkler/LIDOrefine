@@ -5,12 +5,12 @@
         "id" : "lido:actorID"
     },
     "p" : {
-        "parent" : ".//lido:actor",
-        "string" : "lido:nameActorSet/lido:appellationValue/text()",
-        "id" : "lido:actorID"  
+        "parent" : ".//lido:place",
+        "string" : "lido:namePlaceSet/lido:appellationValue/text()",
+        "id" : "lido:placeID"  
     },
-    "o" : {
-            "parent" : ".//lido:objectWorktype",
+    "O" : {
+            "parent" : ".//lido:objectWorkType",
             "string" : "lido:term/text()",
             "id" : "lido:conceptID"  
         },

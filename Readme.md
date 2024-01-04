@@ -102,7 +102,15 @@ python LR2xml.py -i LIDO-Example-FMobj00154983-LaPrimavera-csv.csv -x LIDO-Examp
 
 The result is `LIDO-Example_FMobj00154983-LaPrimavera_refined.xml`, an enriched version of the original LIDO.
 
+## LIDOcombine.py
 
+A simple helper application that takes a list of LIDO XML files and combines them into one single XML file.
+
+Usage:
+
+```bash
+python LIDOcombine.py -o <OUTPUTFILE> <INPUT_1.xml>, <INDPUT_2.xm.> ...
+```
 
 
 ### TODO
