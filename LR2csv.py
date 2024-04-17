@@ -30,6 +30,7 @@ parser.add_argument('-d', '--targetdir', help = "specify the target dir" )
 args = parser.parse_args()
 filename = Path(args.infile)
 
+# Read in and parse LIDO-XML
 try:
     tree = etree.parse(filename)
     NSMAP = tree.getroot().nsmap
@@ -44,7 +45,11 @@ def convert(subdict, additionalElements):
     outputList = []
     for _ in parentList:
         location = tree.getpath(_) # xPath zum Feld
-        string = _.xpath(subdict['string'], namespaces = NSMAP)[0]
+        try:
+            string = _.xpath(subdict['string'], namespaces = NSMAP)[0]
+        except Exception as e:
+            print(f"Kein Textinhalt für {subdict['string']} gefunden.")
+            string = ""
         keys = ["{http://www.lido-schema.org}type", "{http://www.lido-schema.org}source", "text"]
         
         _IDs = _.xpath(subdict['id'], namespaces = NSMAP)
