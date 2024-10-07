@@ -1,5 +1,20 @@
 # LIDOrefine - Convert LIDO into CSV, enrich it in OpenRefine and convert it back into LIDO
 
+## What's the point of LIDOrefine?
+
+The use of controlled vocabularies via URIs is essential for producing high-quality metadata. Simply using a string to identify a creator, resource, or subject relevant to a resource's description has very limited usefulness, as it is not reliably machine-readable.
+
+It is therefore vital for data providers in the GLAM sector to enrich their data with URIs that refer to controlled vocabularies. However, metadata often lacks references to controlled vocabularies, either due to software limitations that GLAMs are bound to use or because their workflows have not yet incorporated controlled vocabulary standards.
+
+The [reconciliation workflow provided by OpenRefine](https://openrefine.org/docs/manual/reconciling) can help alleviate these difficulties by offering a straightforward and efficient way to link strings to controlled vocabularies via URIs.
+
+That said, loading LIDO-XML files into OpenRefine is not entirely trivial, as these files often have a complex and nested hierarchy. Writing the reconciled data back to the XML file is even more challenging (to the best of my knowledge).
+
+This is where LIDOrefine comes into play: it simplifies the process by extracting relevant elements from the nested LIDO-XML and projecting them into a tabular structure compatible with OpenRefine (this is handled by `LR2csv.py`).
+
+Once the data is in a tabular format, it can be reconciled and enriched using standard OpenRefine workflows. After the enrichment process is complete, the updated data can be written back to the LIDO-XML file (`LR2xml.py` handles this). The result is a LIDO-XML file with metadata that contains URIs referring to controlled vocabularies.
+
+
 ## Setup
 
 Clone the git repository and change into the `LIDOrefine` directory:
