@@ -10,7 +10,7 @@ import sys
 with open('mapping.json', 'r') as f:
   mapping = json.load(f)
 
-# PARSER
+# CLI-PARSER
 parser = argparse.ArgumentParser(
                     prog='LR2csv - Convert LIDO to CSV for Refinement',
                     description='Takes a LIDO XML and converts selected fields into a CSV file that can be modified using, e.g. OpenRefine.')
@@ -30,6 +30,7 @@ parser.add_argument('-d', '--targetdir', help = "specify the target dir" )
 args = parser.parse_args()
 filename = Path(args.infile)
 
+
 # Read in and parse LIDO-XML
 try:
     tree = etree.parse(filename)
@@ -42,6 +43,9 @@ outputCollector = []
 
 def convert(subdict, additionalElements):
     parentList = tree.findall(subdict['parent'], NSMAP) # actor/place/objectWorktype/subjectConcept
+    if len(parentList) == 0:
+        print(f"No {subdict['parent'].replace('.//','')} element found, so there's nothing to enrich.")
+        pass
     outputList = []
     for _ in parentList:
         location = tree.getpath(_) # xPath zum Feld
@@ -78,6 +82,7 @@ def convert(subdict, additionalElements):
                 if not f"{x} {k}" in output:
                     output[f"{x} {k}"] = ""
         outputList.append(output)
+        print(output)
     return outputList
 
 if args.a:
