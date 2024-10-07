@@ -62,8 +62,8 @@ Converts the actor fields of the file `inputLIDO.xml` into csv and add 3 more ac
 - `-h`/`--help`: print help text
 - `-a <N>`: enrich actors, an optional number after `-a` adds `N` fields to the csv.
 - `-p <N>`: enrich places. Again `<N>` adds `N` fields.
-- `s <N>`: enricht subjects.
-- `o <N>`: enrich objectWorktype.
+- `-s <N>`: enricht subjects.
+- `-o <N>`: enrich objectWorktype.
 - `-i`/`--infile`: specify input file (mandatory)
 - `-O`/`--outfile`: specify output filename, if not specified, the input filename is derived from input filename
 - `-d`/`--targetdir`: specify folder where output is to be written. Folder is created if it doesn't exist. If this option is not provided, output is written in the current directory
@@ -80,9 +80,9 @@ python LR2xml.py -i refinedDoc.csv -x inputLIDO.xml
 
 Write the modified data back into the LIDO XML file.
 
-- `i`/`--infile`: The CSV file that has been modified.
-- `x`/`--xml`: The original XML file the modified data is to be written into.
-- `I`/`--infix`: String added to the output filename in order to avoid that the original file be overwritten. Default value: `_refined`. The above example thus produces an file with the filename `inputLIDO_refined.xml`
+- `-i`/`--infile`: The CSV file that has been modified.
+- `-x`/`--xml`: The original XML file the modified data is to be written into.
+- `-I`/`--infix`: String added to the output filename in order to avoid that the original file be overwritten. Default value: `_refined`. The above example thus produces an file with the filename `inputLIDO_refined.xml`
 
 ## Workflow
 
