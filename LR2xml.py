@@ -97,13 +97,11 @@ if not args.keeptimestamp:
     from datetime import datetime
 
     # Get current time
-    current_time = datetime.now()
-
-    # Format the time as "YYYY-MM-DD HH:MM:SS"
-    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+    current_time = datetime.now().replace(microsecond=0).isoformat()
 
     recordInfoSet = tree.find('.//lido:recordInfoSet', NSMAP)
-    etree.SubElement(recordInfoSet, '{http://www.lido-schema.org}metadataDate', attrib = { '{http://www.lido-schema.org}type' : "http://terminology.lido-schema.org/lido00473"} ).text = formatted_time
+    etree.SubElement(recordInfoSet, '{http://www.lido-schema.org}metadataDate', attrib = { '{http://www.lido-schema.org}type' : "http://terminology.lido-schema.org/lido00473"} ).text =     current_time = datetime.now().replace(microsecond=0).isoformat()
+
 
 etree.indent(tree, '   ')
 outputString = etree.tostring(tree,
