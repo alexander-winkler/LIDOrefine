@@ -83,6 +83,7 @@ Write the modified data back into the LIDO XML file.
 - `-i`/`--infile`: The CSV file that has been modified.
 - `-x`/`--xml`: The original XML file the modified data is to be written into.
 - `-I`/`--infix`: String added to the output filename in order to avoid that the original file be overwritten. Default value: `_refined`. The above example thus produces an file with the filename `inputLIDO_refined.xml`
+- `-k`/`--keeptimestamp`: By default, every time the command is run, a modification timestamp is added. This behaviour can be disabled using this optional flag.
 
 ## Workflow
 
