@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-i', '--infile')
 parser.add_argument('-x', '--xml')
 parser.add_argument('-I', '--infix', nargs = "?", default = "_refined")
+parser.add_argument('-k', '--keeptimestamp', required = False, help = "Flag that overrides default behaviour and does not change metadataDate")
 
 args = parser.parse_args()
 filename = Path(args.infile)
@@ -91,6 +92,20 @@ with open(filename, "r") as csvfile:
                 
 outputfilename = xml_filename.stem + args.infix + xml_filename.suffix
 
+# Unless explicitly disabled, update timestamp
+if not args.keeptimestamp:
+    from datetime import datetime
+
+    # Get current time
+    current_time = datetime.now()
+
+    # Format the time as "YYYY-MM-DD HH:MM:SS"
+    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    recordInfoSet = tree.find('.//lido:recordInfoSet', NSMAP)
+    etree.SubElement(recordInfoSet, '{http://www.lido-schema.org}metadataDate', attrib = { '{http://www.lido-schema.org}type' : "http://terminology.lido-schema.org/lido00473"} ).text = formatted_time
+
+etree.indent(tree, '   ')
 outputString = etree.tostring(tree,
                         pretty_print=True,
                         xml_declaration=True,

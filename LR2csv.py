@@ -82,7 +82,6 @@ def convert(subdict, additionalElements):
                 if not f"{x} {k}" in output:
                     output[f"{x} {k}"] = ""
         outputList.append(output)
-        print(output)
     return outputList
 
 if args.a:
